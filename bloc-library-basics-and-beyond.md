@@ -7,17 +7,17 @@ slidenumbers: true
 
 ---
 
-# About Me
+# about me
 
 ![inline](./assets/about-me.png)
 
 ---
 
-# So you need to build an app?
+# so you need to build an app?
 
 ---
 
-## Application State
+## application state
 
 ![inline](./assets/ui-is-function-of-state.png)
 
@@ -27,7 +27,7 @@ slidenumbers: true
 
 ---
 
-# Why State Management?s
+# why state management?
 
 ### "There is (almost) always state in our applications therefore we are (almost) always managing state whether we know it or not."
 
@@ -35,17 +35,17 @@ slidenumbers: true
 
 ---
 
-# Goals
+# goals
 
 ☐ separate presentation from logic
+☐ logging/analytics
 ☐ test with ease
 ☐ develop efficiently (with many devs)
-☐ maintainable/scalables
-☐ logging/analytics
+☐ maintainable/scalable
 
 ---
 
-# Packages
+# packages
 
 - package:bloc - Core (Dart)
 - package:bloc_test - Testing Helpers (Dart)
@@ -54,7 +54,7 @@ slidenumbers: true
 
 ---
 
-# Packages
+# packages
 
 - **package:bloc - Core (Dart)**
 - package:bloc_test - Testing Helpers (Dart)
@@ -63,7 +63,7 @@ slidenumbers: true
 
 ---
 
-# Packages
+# packages
 
 - package:bloc - Core (Dart)
 - **package:bloc_test - Testing Helpers (Dart)**
@@ -72,7 +72,7 @@ slidenumbers: true
 
 ---
 
-# Packages
+# packages
 
 - package:bloc - Core (Dart)
 - package:bloc_test - Testing Helpers (Dart)
@@ -81,16 +81,16 @@ slidenumbers: true
 
 ---
 
-# Packages
+# packages
 
 - package:bloc - Core (Dart)
 - package:bloc_test - Testing Helpers (Dart)
 - package:flutter_bloc - Flutter Widgets
 - **package:angular_bloc - AngularDart Components**
 
---
+---
 
-# Overview
+# overview
 
 ![inline](./assets/bloc-overview.pdf)
 
@@ -98,19 +98,19 @@ slidenumbers: true
 
 ---
 
-# Real-World
+# real-world
 
 ![inline](./assets/bloc-counter-overview.png)
 
 ---
 
-# Real-World: Increment
+# real-world: increment
 
 ![inline](./assets/bloc-counter-increment.png)
 
 ---
 
-# Packages
+# packages
 
 - **package:bloc - Core (Dart)**
 - package:bloc_test - Testing Helpers (Dart)
@@ -156,6 +156,7 @@ dependencies:
 # bloc anatomy
 
 ```dart
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 ```
 
@@ -163,9 +164,10 @@ import 'package:bloc/bloc.dart';
 
 # bloc anatomy
 
-[.code-highlight: 3]
+[.code-highlight: 4]
 
 ```dart
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 class CounterBloc extends Bloc<CounterEvent, int> {}
@@ -175,9 +177,10 @@ class CounterBloc extends Bloc<CounterEvent, int> {}
 
 # bloc anatomy
 
-[.code-highlight: 3]
+[.code-highlight: 4]
 
 ```dart
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 enum CounterEvent { increment, decrement }
@@ -189,9 +192,10 @@ class CounterBloc extends Bloc<CounterEvent, int> {}
 
 # bloc anatomy
 
-[.code-highlight: 6-7]
+[.code-highlight: 7-8]
 
 ```dart
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 enum CounterEvent { increment, decrement }
@@ -206,9 +210,10 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 # bloc anatomy
 
-[.code-highlight: 9-12]
+[.code-highlight: 10-13]
 
 ```dart
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 enum CounterEvent { increment, decrement }
@@ -228,9 +233,62 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 # bloc anatomy
 
-[.code-highlight: 9-19]
+[.code-highlight: 12-14]
 
 ```dart
+import 'dart:async';
+import 'package:bloc/bloc.dart';
+
+enum CounterEvent { increment, decrement }
+
+class CounterBloc extends Bloc<CounterEvent, int> {
+    @override
+    int get initialState => 0;
+
+    @override
+    Stream<int> mapEventToState(CounterEvent event) async* {
+        switch (event) {
+
+        }
+    }
+}
+```
+
+---
+
+# bloc anatomy
+
+[.code-highlight: 13-15]
+
+```dart
+import 'dart:async';
+import 'package:bloc/bloc.dart';
+
+enum CounterEvent { increment, decrement }
+
+class CounterBloc extends Bloc<CounterEvent, int> {
+    @override
+    int get initialState => 0;
+
+    @override
+    Stream<int> mapEventToState(CounterEvent event) async* {
+        switch (event) {
+            case CounterEvent.increment:
+                yield state + 1;
+                break;
+        }
+    }
+}
+```
+
+---
+
+# bloc anatomy
+
+[.code-highlight: 16-18]
+
+```dart
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 enum CounterEvent { increment, decrement }
@@ -258,6 +316,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 # bloc anatomy
 
 ```dart
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 enum CounterEvent { increment, decrement }
@@ -282,7 +341,462 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# Bloc
+# bloc in action
+
+```dart
+import 'counter_bloc.dart';
+
+void main() {
+    final counterBloc = CounterBloc();
+
+    counterBloc.listen(print);
+
+    counterBloc.add(CounterEvent.increment);
+    counterBloc.add(CounterEvent.decrement);
+}
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 1]
+
+```dart
+import 'counter_bloc.dart';
+
+void main() {
+    final counterBloc = CounterBloc();
+
+    counterBloc.listen(print);
+
+    counterBloc.add(CounterEvent.increment);
+    counterBloc.add(CounterEvent.decrement);
+}
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 4]
+
+```dart
+import 'counter_bloc.dart';
+
+void main() {
+    final counterBloc = CounterBloc();
+
+    counterBloc.listen(print);
+
+    counterBloc.add(CounterEvent.increment);
+    counterBloc.add(CounterEvent.decrement);
+}
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 6]
+
+```dart
+import 'counter_bloc.dart';
+
+void main() {
+    final counterBloc = CounterBloc();
+
+    counterBloc.listen(print);
+
+    counterBloc.add(CounterEvent.increment);
+    counterBloc.add(CounterEvent.decrement);
+}
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 8]
+
+```dart
+import 'counter_bloc.dart';
+
+void main() {
+    final counterBloc = CounterBloc();
+
+    counterBloc.listen(print);
+
+    counterBloc.add(CounterEvent.increment);
+    counterBloc.add(CounterEvent.decrement);
+}
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 9]
+
+```dart
+import 'counter_bloc.dart';
+
+void main() {
+    final counterBloc = CounterBloc();
+
+    counterBloc.listen(print);
+
+    counterBloc.add(CounterEvent.increment);
+    counterBloc.add(CounterEvent.decrement);
+}
+```
+
+---
+
+# bloc in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+1
+0
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 1]
+
+```sh
+$ dart example/counter_bloc.dart
+0
+1
+0
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 2]
+
+```sh
+$ dart example/counter_bloc.dart
+0 // initialState
+1
+0
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 3]
+
+```sh
+$ dart example/counter_bloc.dart
+0
+1 // CounterEvent.increment
+0
+```
+
+---
+
+# bloc in action
+
+[.code-highlight: 4]
+
+```sh
+$ dart example/counter_bloc.dart
+0
+1
+0 // CounterEvent.decrement
+```
+
+---
+
+# goals
+
+**☑️ separate presentation from logic**
+☐ logging/analytics
+☐ test with ease
+☐ develop efficiently (with many devs)
+☐ maintainable/scalable
+
+---
+
+# goals
+
+☑️ separate presentation from logic
+**☐ logging/analytics**
+☐ test with ease
+☐ develop efficiently (with many devs)
+☐ maintainable/scalable
+
+---
+
+# bloc hooks: onEvent
+
+> _invoked when an event is added to the bloc_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onEvent(CounterEvent event) {
+    super.onEvent(event);
+    print('onEvent $event');
+  }
+
+  ...
+}
+```
+
+---
+
+[.code-highlight: 5-9]
+
+# bloc hooks: onEvent
+
+> _invoked when an event is added to the bloc_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onEvent(CounterEvent event) {
+    super.onEvent(event);
+    print('onEvent $event');
+  }
+
+  ...
+}
+```
+
+---
+
+# onEvent in action
+
+```sh
+$ dart example/counter_bloc.dart
+onEvent CounterEvent.increment
+onEvent CounterEvent.decrement
+0
+1
+0
+```
+
+---
+
+# onEvent in action
+
+[.code-highlight: 1]
+
+```sh
+$ dart example/counter_bloc.dart
+onEvent CounterEvent.increment
+onEvent CounterEvent.decrement
+0
+1
+0
+```
+
+---
+
+# onEvent in action
+
+[.code-highlight: 2]
+
+```sh
+$ dart example/counter_bloc.dart
+onEvent CounterEvent.increment
+onEvent CounterEvent.decrement
+0
+1
+0
+```
+
+---
+
+# onEvent in action
+
+[.code-highlight: 3]
+
+```sh
+$ dart example/counter_bloc.dart
+onEvent CounterEvent.increment
+onEvent CounterEvent.decrement
+0
+1
+0
+```
+
+---
+
+# onEvent in action
+
+[.code-highlight: 4-6]
+
+```sh
+$ dart example/counter_bloc.dart
+onEvent CounterEvent.increment
+onEvent CounterEvent.decrement
+0
+1
+0
+```
+
+---
+
+# bloc hooks: onTransition
+
+> _invoked when a new state is emitted_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onTransition(Transition<CounterEvent, int> transition) {
+    super.onTransition(transition);
+    print('onTransition $transition');
+  }
+
+  ...
+}
+```
+
+---
+
+[.code-highlight: 5-9]
+
+# bloc hooks: onTransition
+
+> _invoked when a new state is emitted_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onTransition(Transition<CounterEvent, int> transition) {
+    super.onTransition(transition);
+    print('onTransition $transition');
+  }
+
+  ...
+}
+```
+
+---
+
+# onTransition in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+```
+
+---
+
+[.code-highlight: 1]
+
+# onTransition in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+```
+
+---
+
+[.code-highlight: 2]
+
+# onTransition in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+```
+
+---
+
+[.code-highlight: 3]
+
+# onTransition in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+```
+
+---
+
+[.code-highlight: 4]
+
+# onTransition in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+```
+
+---
+
+[.code-highlight: 5]
+
+# onTransition in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+```
+
+---
+
+[.code-highlight: 6]
+
+# onTransition in action
+
+```sh
+$ dart example/counter_bloc.dart
+0
+onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+```
 
 ---
 

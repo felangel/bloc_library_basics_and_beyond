@@ -1,1 +1,4 @@
 .DS_Store
+.packages
+pubspec.lock
+.dart_tool/
