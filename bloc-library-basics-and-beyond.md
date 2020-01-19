@@ -930,7 +930,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
         yield state - 1;
         break;
       default:
-        throw Exception('unhandled event!');
+        throw Exception('unsupported event!');
     }
   }
 }
@@ -957,7 +957,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
         yield state - 1;
         break;
       default:
-        throw Exception('unhandled event!');
+        throw Exception('unsupported event!');
     }
   }
 }
@@ -1006,7 +1006,7 @@ $ dart example/main.dart
 0
 1
 0
-onError Exception: unhandled event!,
+onError Exception: unsupported event!,
 #0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
 #1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
 #2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
@@ -1032,7 +1032,7 @@ $ dart example/main.dart
 0
 1
 0
-onError Exception: unhandled event!,
+onError Exception: unsupported event!,
 #0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
 #1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
 #2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
@@ -1058,7 +1058,7 @@ $ dart example/main.dart
 0
 1
 0
-onError Exception: unhandled event!,
+onError Exception: unsupported event!,
 #0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
 #1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
 #2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
@@ -1084,7 +1084,7 @@ $ dart example/main.dart
 0
 1
 0
-onError Exception: unhandled event!,
+onError Exception: unsupported event!,
 #0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
 #1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
 #2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
@@ -1123,6 +1123,36 @@ class MyBlocDelegate extends BlocDelegate {}
 import 'package:bloc/bloc.dart';
 
 class MyBlocDelegate extends BlocDelegate {}
+```
+
+---
+
+# seeing double: bloc delegate
+
+> _handles hooks from all blocs_
+
+```dart
+import 'package:bloc/bloc.dart';
+
+class MyBlocDelegate extends BlocDelegate {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print('onEvent ${bloc.runtimeType}, $event');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print('onTransition ${bloc.runtimeType}, $transition');
+  }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print('onError ${bloc.runtimeType}, $error, $stacktrace');
+  }
+}
 ```
 
 ---
