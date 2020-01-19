@@ -9,12 +9,6 @@ class CounterBloc extends Bloc<CounterEvent, int> {
   int get initialState => 0;
 
   @override
-  void onTransition(Transition<CounterEvent, int> transition) {
-    super.onTransition(transition);
-    print('onTransition $transition');
-  }
-
-  @override
   Stream<int> mapEventToState(CounterEvent event) async* {
     switch (event) {
       case CounterEvent.increment:
@@ -23,15 +17,8 @@ class CounterBloc extends Bloc<CounterEvent, int> {
       case CounterEvent.decrement:
         yield state - 1;
         break;
+      default:
+        throw Exception('unhandled event!');
     }
   }
-}
-
-void main() {
-  final counterBloc = CounterBloc();
-
-  counterBloc.listen(print);
-
-  counterBloc.add(CounterEvent.increment);
-  counterBloc.add(CounterEvent.decrement);
 }

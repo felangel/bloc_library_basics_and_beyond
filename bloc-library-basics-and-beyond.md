@@ -90,6 +90,15 @@ slidenumbers: true
 
 ---
 
+# packages
+
+- **package:bloc - Core (Dart)**
+- package:bloc_test - Testing Helpers (Dart)
+- package:flutter_bloc - Flutter Widgets
+- package:angular_bloc - AngularDart Components
+
+---
+
 # overview
 
 ![inline](./assets/bloc-overview.pdf)
@@ -100,22 +109,13 @@ slidenumbers: true
 
 # real-world
 
-![inline](./assets/bloc-counter-overview.png)
+![inline](./assets/bloc-counter-overview.pdf)
 
 ---
 
 # real-world: increment
 
-![inline](./assets/bloc-counter-increment.png)
-
----
-
-# packages
-
-- **package:bloc - Core (Dart)**
-- package:bloc_test - Testing Helpers (Dart)
-- package:flutter_bloc - Flutter Widgets
-- package:angular_bloc - AngularDart Components
+![inline](./assets/bloc-counter-increment.pdf)
 
 ---
 
@@ -456,7 +456,7 @@ void main() {
 # bloc in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 1
 0
@@ -469,7 +469,7 @@ $ dart example/counter_bloc.dart
 [.code-highlight: 1]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 1
 0
@@ -482,7 +482,7 @@ $ dart example/counter_bloc.dart
 [.code-highlight: 2]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0 // initialState
 1
 0
@@ -495,7 +495,7 @@ $ dart example/counter_bloc.dart
 [.code-highlight: 3]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 1 // CounterEvent.increment
 0
@@ -508,7 +508,7 @@ $ dart example/counter_bloc.dart
 [.code-highlight: 4]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 1
 0 // CounterEvent.decrement
@@ -580,10 +580,33 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
+[.code-highlight: 8]
+
+# bloc hooks: onEvent
+
+> _invoked when an event is added to the bloc_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onEvent(CounterEvent event) {
+    super.onEvent(event);
+    print('onEvent $event');
+  }
+
+  ...
+}
+```
+
+---
+
 # onEvent in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 onEvent CounterEvent.increment
 onEvent CounterEvent.decrement
 0
@@ -598,7 +621,7 @@ onEvent CounterEvent.decrement
 [.code-highlight: 1]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 onEvent CounterEvent.increment
 onEvent CounterEvent.decrement
 0
@@ -613,7 +636,7 @@ onEvent CounterEvent.decrement
 [.code-highlight: 2]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 onEvent CounterEvent.increment
 onEvent CounterEvent.decrement
 0
@@ -628,7 +651,7 @@ onEvent CounterEvent.decrement
 [.code-highlight: 3]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 onEvent CounterEvent.increment
 onEvent CounterEvent.decrement
 0
@@ -643,7 +666,7 @@ onEvent CounterEvent.decrement
 [.code-highlight: 4-6]
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 onEvent CounterEvent.increment
 onEvent CounterEvent.decrement
 0
@@ -697,10 +720,33 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
+[.code-highlight: 8]
+
+# bloc hooks: onTransition
+
+> _invoked when a new state is emitted_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onTransition(Transition<CounterEvent, int> transition) {
+    super.onTransition(transition);
+    print('onTransition $transition');
+  }
+
+  ...
+}
+```
+
+---
+
 # onTransition in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
 1
@@ -715,7 +761,7 @@ onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextSt
 # onTransition in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
 1
@@ -730,7 +776,7 @@ onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextSt
 # onTransition in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
 1
@@ -745,7 +791,7 @@ onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextSt
 # onTransition in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
 1
@@ -760,7 +806,7 @@ onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextSt
 # onTransition in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
 1
@@ -775,7 +821,7 @@ onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextSt
 # onTransition in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
 1
@@ -790,13 +836,547 @@ onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextSt
 # onTransition in action
 
 ```sh
-$ dart example/counter_bloc.dart
+$ dart example/main.dart
 0
 onTransition Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
 1
 onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
 0
 ```
+
+---
+
+# bloc hooks: onError
+
+> _invoked when an uncaught error is thrown within a bloc_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onError(Object error, StackTrace stacktrace) {
+    super.onError(error, stacktrace);
+    print('onError $error, $stacktrace');
+  }
+
+  ...
+}
+```
+
+---
+
+[.code-highlight: 5-9]
+
+# bloc hooks: onError
+
+> _invoked when an uncaught error is thrown within a bloc_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onError(Object error, StackTrace stacktrace) {
+    super.onError(error, stacktrace);
+    print('onError $error, $stacktrace');
+  }
+
+  ...
+}
+```
+
+---
+
+[.code-highlight: 8]
+
+# bloc hooks: onError
+
+> _invoked when an uncaught error is thrown within a bloc_
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+  @override
+  int get initialState => 0;
+
+  @override
+  void onError(Object error, StackTrace stacktrace) {
+    super.onError(error, stacktrace);
+    print('onError $error, $stacktrace');
+  }
+
+  ...
+}
+```
+
+---
+
+# bloc hooks: onError
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+
+  ...
+
+  @override
+  Stream<int> mapEventToState(CounterEvent event) async* {
+    switch (event) {
+      case CounterEvent.increment:
+        yield state + 1;
+        break;
+      case CounterEvent.decrement:
+        yield state - 1;
+        break;
+      default:
+        throw Exception('unhandled event!');
+    }
+  }
+}
+```
+
+---
+
+# bloc hooks: onError
+
+[.code-highlight: 14-15]
+
+```dart
+class CounterBloc extends Bloc<CounterEvent, int> {
+
+  ...
+
+  @override
+  Stream<int> mapEventToState(CounterEvent event) async* {
+    switch (event) {
+      case CounterEvent.increment:
+        yield state + 1;
+        break;
+      case CounterEvent.decrement:
+        yield state - 1;
+        break;
+      default:
+        throw Exception('unhandled event!');
+    }
+  }
+}
+```
+
+---
+
+# bloc hooks: onError
+
+```dart
+void main() {
+  final counterBloc = CounterBloc();
+
+  counterBloc.listen(print);
+
+  counterBloc.add(CounterEvent.increment);
+  counterBloc.add(CounterEvent.decrement);
+  counterBloc.add(null);
+}
+```
+
+---
+
+[.code-highlight: 8]
+
+# bloc hooks: onError
+
+```dart
+void main() {
+  final counterBloc = CounterBloc();
+
+  counterBloc.listen(print);
+
+  counterBloc.add(CounterEvent.increment);
+  counterBloc.add(CounterEvent.decrement);
+  counterBloc.add(null);
+}
+```
+
+---
+
+# onError in action
+
+```sh
+$ dart example/main.dart
+0
+1
+0
+onError Exception: unhandled event!,
+#0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
+#1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
+#2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
+#3      _RootZone.runUnaryGuarded (dart:async/zone.dart:1316:10)
+#4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#5      _DelayedData.perform (dart:async/stream_impl.dart:593:14)
+#6      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:709:11)
+#7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:669:7)
+#8      _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#10     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#11     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+---
+
+[.code-highlight: 1]
+
+# onError in action
+
+```sh
+$ dart example/main.dart
+0
+1
+0
+onError Exception: unhandled event!,
+#0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
+#1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
+#2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
+#3      _RootZone.runUnaryGuarded (dart:async/zone.dart:1316:10)
+#4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#5      _DelayedData.perform (dart:async/stream_impl.dart:593:14)
+#6      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:709:11)
+#7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:669:7)
+#8      _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#10     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#11     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+---
+
+[.code-highlight: 5-17]
+
+# onError in action
+
+```sh
+$ dart example/main.dart
+0
+1
+0
+onError Exception: unhandled event!,
+#0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
+#1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
+#2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
+#3      _RootZone.runUnaryGuarded (dart:async/zone.dart:1316:10)
+#4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#5      _DelayedData.perform (dart:async/stream_impl.dart:593:14)
+#6      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:709:11)
+#7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:669:7)
+#8      _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#10     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#11     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+---
+
+[.code-highlight: 6]
+
+# onError in action
+
+```sh
+$ dart example/main.dart
+0
+1
+0
+onError Exception: unhandled event!,
+#0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:27:9) <asynchronous suspension>
+#1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
+#2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
+#3      _RootZone.runUnaryGuarded (dart:async/zone.dart:1316:10)
+#4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#5      _DelayedData.perform (dart:async/stream_impl.dart:593:14)
+#6      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:709:11)
+#7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:669:7)
+#8      _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#10     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#11     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+---
+
+# seeing double: bloc delegate
+
+> _handles hooks from all blocs_
+
+```dart
+import 'package:bloc/bloc.dart';
+
+class MyBlocDelegate extends BlocDelegate {}
+```
+
+---
+
+[.code-highlight: 3]
+
+# seeing double: bloc delegate
+
+> _handles hooks from all blocs_
+
+```dart
+import 'package:bloc/bloc.dart';
+
+class MyBlocDelegate extends BlocDelegate {}
+```
+
+---
+
+[.code-highlight: 4-8]
+
+# seeing double: bloc delegate
+
+> _handles hooks from all blocs_
+
+```dart
+import 'package:bloc/bloc.dart';
+
+class MyBlocDelegate extends BlocDelegate {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print('onEvent ${bloc.runtimeType}, $event');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print('onTransition ${bloc.runtimeType}, $transition');
+  }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print('onError ${bloc.runtimeType}, $error, $stacktrace');
+  }
+}
+```
+
+---
+
+[.code-highlight: 10-14]
+
+# seeing double: bloc delegate
+
+> _handles hooks from all blocs_
+
+```dart
+import 'package:bloc/bloc.dart';
+
+class MyBlocDelegate extends BlocDelegate {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print('onEvent ${bloc.runtimeType}, $event');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print('onTransition ${bloc.runtimeType}, $transition');
+  }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print('onError ${bloc.runtimeType}, $error, $stacktrace');
+  }
+}
+```
+
+---
+
+[.code-highlight: 16-20]
+
+# seeing double: bloc delegate
+
+> _handles hooks from all blocs_
+
+```dart
+import 'package:bloc/bloc.dart';
+
+class MyBlocDelegate extends BlocDelegate {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print('onEvent ${bloc.runtimeType}, $event');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print('onTransition ${bloc.runtimeType}, $transition');
+  }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print('onError ${bloc.runtimeType}, $error, $stacktrace');
+  }
+}
+```
+
+---
+
+# initialize bloc delegate
+
+```dart
+import 'package:bloc/bloc.dart';
+
+import 'counter_bloc.dart';
+import 'my_bloc_delegate.dart';
+
+void main() {
+  BlocSupervisor.delegate = MyBlocDelegate();
+  final counterBloc = CounterBloc();
+
+  counterBloc.listen(print);
+
+  counterBloc.add(CounterEvent.increment);
+  counterBloc.add(CounterEvent.decrement);
+  counterBloc.add(null);
+}
+```
+
+---
+
+[.code-highlight: 1,4,7]
+
+# initialize bloc delegate
+
+```dart
+import 'package:bloc/bloc.dart';
+
+import 'counter_bloc.dart';
+import 'my_bloc_delegate.dart';
+
+void main() {
+  BlocSupervisor.delegate = MyBlocDelegate();
+  final counterBloc = CounterBloc();
+
+  counterBloc.listen(print);
+
+  counterBloc.add(CounterEvent.increment);
+  counterBloc.add(CounterEvent.decrement);
+  counterBloc.add(null);
+}
+```
+
+---
+
+# bloc delegate in action
+
+```sh
+$ dart example/main.dart
+onEvent CounterBloc, CounterEvent.increment
+onEvent CounterBloc, CounterEvent.decrement
+onEvent CounterBloc, null
+0
+onTransition CounterBloc, Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition CounterBloc, Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+onError CounterBloc, Exception: unhandled event!,
+#0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:21:9)<asynchronous suspension>
+#1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
+#2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
+#3      _RootZone.runUnaryGuarded (dart:async/zone.dart:1316:10)
+#4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#5      _DelayedData.perform (dart:async/stream_impl.dart:593:14)
+#6      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:709:11)
+#7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:669:7)
+#8      _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#10     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#11     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+---
+
+[.code-highlight: 1]
+
+# bloc delegate in action
+
+```sh
+$ dart example/main.dart
+onEvent CounterBloc, CounterEvent.increment
+onEvent CounterBloc, CounterEvent.decrement
+onEvent CounterBloc, null
+0
+onTransition CounterBloc, Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition CounterBloc, Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+onError CounterBloc, Exception: unhandled event!,
+#0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:21:9)<asynchronous suspension>
+#1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
+#2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
+#3      _RootZone.runUnaryGuarded (dart:async/zone.dart:1316:10)
+#4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#5      _DelayedData.perform (dart:async/stream_impl.dart:593:14)
+#6      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:709:11)
+#7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:669:7)
+#8      _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#10     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#11     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+---
+
+[.code-highlight: 2,3,4,6,8,10]
+
+# bloc delegate in action
+
+```sh
+$ dart example/main.dart
+onEvent CounterBloc, CounterEvent.increment
+onEvent CounterBloc, CounterEvent.decrement
+onEvent CounterBloc, null
+0
+onTransition CounterBloc, Transition { currentState: 0, event: CounterEvent.increment, nextState: 1 }
+1
+onTransition CounterBloc, Transition { currentState: 1, event: CounterEvent.decrement, nextState: 0 }
+0
+onError CounterBloc, Exception: unhandled event!,
+#0      CounterBloc.mapEventToState (file:///example/counter_bloc.dart:21:9)<asynchronous suspension>
+#1      Bloc._bindStateSubject.<anonymous closure> (package:bloc/src/bloc.dart:155:14)
+#2      Stream.asyncExpand.onListen.<anonymous closure> (dart:async/stream.dart:576:30)
+#3      _RootZone.runUnaryGuarded (dart:async/zone.dart:1316:10)
+#4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#5      _DelayedData.perform (dart:async/stream_impl.dart:593:14)
+#6      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:709:11)
+#7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:669:7)
+#8      _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#10     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#11     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+---
+
+# goals
+
+☑️ separate presentation from logic
+**☑️ logging/analytics**
+☐ test with ease
+☐ develop efficiently (with many devs)
+☐ maintainable/scalable
+
+---
+
+# goals
+
+☑️ separate presentation from logic
+☑️ logging/analytics
+**☐ test with ease**
+☐ develop efficiently (with many devs)
+☐ maintainable/scalable
 
 ---
 
