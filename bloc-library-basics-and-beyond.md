@@ -1,7 +1,7 @@
 footer: @felangelov - flutter europe 2020
 slidenumbers: true
 
-# Bloc Library: Basics and Beyond 🚀
+# Bloc Library: Basics & Beyond 🚀
 
 ### Felix Angelov @ Very Good Ventures
 
@@ -9,97 +9,123 @@ slidenumbers: true
 
 # about me
 
-![inline](./assets/about-me.png)
+![inline left](./assets/bmw-logo.png) ![inline right](./assets/vgv-logo.png)
+
+^ started at BMW about 4 years ago. using flutter for last 2 years. rebuild BMW mobile app in Flutter. joined VGV in Jan.
 
 ---
 
-# so you need to build an app?
+# VGV Chicago 🕶️🦄
+
+![inline](./assets/vgv-chicago.jpg)
+
+^ opened an office with my friend/teammate, Jorge. if interested in learning more about VGV reach out.
 
 ---
 
-## application state
+![inline](./assets/create-app-meme.jpeg)
 
-![inline](./assets/ui-is-function-of-state.png)
+[.footer: https://memeshappen.com/meme/one-does-not-simply-a/one-does-not-simply-create-a-successful-app-29206/9]
 
-#### "A system is described as stateful if it is designed to remember preceding events or user interactions; the remembered information is called the **state**"
-
-[.footer: https://en.wikipedia.org/wiki/State_(computer_science)]
+^ so rewind 2 years, we were asked to rewrite the BMW app in Flutter. we had to get it right
 
 ---
 
-# why state management?
+# Goals
 
-### "There is (almost) always state in our applications therefore we are (almost) always managing state whether we know it or not."
+☐ decouple UI & business logic
 
-[.footer: https://egghead.io/articles/what-is-state-why-do-i-need-to-manage-it]
+☐ easy to test
 
----
-
-# goals
-
-☐ separate presentation from logic
-☐ logging/analytics
-☐ test with ease
-☐ develop efficiently (with many devs)
-☐ maintainable/scalable
+☐ predictable/consistent
 
 ---
 
-# packages
+![inline](./assets/choose-state-management.png)
+
+[.footer: https://medium.com/flutter-community/let-me-help-you-to-understand-and-choose-a-state-management-solution-for-your-app-9ffeac834ee3]
+
+^ so we did tons of research and specifically with regard to state management we decided on an approach. Teammate, Jorge wrote an article about our strategy. It's not surprise that we ended up pivoting many times since then.
+
+---
+
+# Evolution is Key
+
+---
+
+# Packages
 
 - package:bloc - Core (Dart)
+
 - package:bloc_test - Testing Helpers (Dart)
+
 - package:flutter_bloc - Flutter Widgets
-- package:angular_bloc - AngularDart Components
+
+- ~~package:angular_bloc - AngularDart Components~~
 
 ---
 
-# packages
+# Packages
 
 - **package:bloc - Core (Dart)**
+
 - package:bloc_test - Testing Helpers (Dart)
+
 - package:flutter_bloc - Flutter Widgets
-- package:angular_bloc - AngularDart Components
+
+- ~~package:angular_bloc - AngularDart Components~~
 
 ---
 
-# packages
+# Packages
 
 - package:bloc - Core (Dart)
+
 - **package:bloc_test - Testing Helpers (Dart)**
+
 - package:flutter_bloc - Flutter Widgets
-- package:angular_bloc - AngularDart Components
+
+- ~~package:angular_bloc - AngularDart Components~~
 
 ---
 
-# packages
+# Packages
 
 - package:bloc - Core (Dart)
+
 - package:bloc_test - Testing Helpers (Dart)
+
 - **package:flutter_bloc - Flutter Widgets**
-- package:angular_bloc - AngularDart Components
+
+- ~~package:angular_bloc - AngularDart Components~~
 
 ---
 
-# packages
+# Packages
 
 - package:bloc - Core (Dart)
+
 - package:bloc_test - Testing Helpers (Dart)
+
 - package:flutter_bloc - Flutter Widgets
-- **package:angular_bloc - AngularDart Components**
+
+- **~~package:angular_bloc - AngularDart Components~~**
 
 ---
 
-# packages
+# Packages
 
 - **package:bloc - Core (Dart)**
+
 - package:bloc_test - Testing Helpers (Dart)
+
 - package:flutter_bloc - Flutter Widgets
-- package:angular_bloc - AngularDart Components
+
+- ~~package:angular_bloc - AngularDart Components~~
 
 ---
 
-# overview
+# Overview
 
 ![inline](./assets/bloc-overview.pdf)
 
@@ -107,13 +133,13 @@ slidenumbers: true
 
 ---
 
-# real-world
+# Real-World
 
 ![inline](./assets/bloc-counter-overview.pdf)
 
 ---
 
-# real-world: increment
+# Real-World: Increment
 
 ![inline](./assets/bloc-counter-increment.pdf)
 
@@ -153,7 +179,7 @@ dependencies:
 
 ---
 
-# bloc anatomy
+# Bloc Anatomy
 
 ```dart
 import 'dart:async';
@@ -162,7 +188,7 @@ import 'package:bloc/bloc.dart';
 
 ---
 
-# bloc anatomy
+# Bloc Anatomy
 
 [.code-highlight: 4]
 
@@ -170,14 +196,14 @@ import 'package:bloc/bloc.dart';
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-class CounterBloc extends Bloc<CounterEvent, int> {}
+enum CounterEvent { increment, decrement }
 ```
 
 ---
 
-# bloc anatomy
+# Bloc Anatomy
 
-[.code-highlight: 4]
+[.code-highlight: 6]
 
 ```dart
 import 'dart:async';
@@ -190,7 +216,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {}
 
 ---
 
-# bloc anatomy
+# Bloc Anatomy
 
 [.code-highlight: 7-8]
 
@@ -208,19 +234,15 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# bloc anatomy
+# Bloc Anatomy
 
-[.code-highlight: 10-13]
+[.code-highlight: 6-9]
 
 ```dart
-import 'dart:async';
-import 'package:bloc/bloc.dart';
-
-enum CounterEvent { increment, decrement }
+...
 
 class CounterBloc extends Bloc<CounterEvent, int> {
-    @override
-    int get initialState => 0;
+    ...
 
     @override
     Stream<int> mapEventToState(CounterEvent event) async* {
@@ -231,50 +253,68 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# bloc anatomy
+# Bloc Anatomy
+
+[.code-highlight: 8-10]
+
+```dart
+...
+
+class CounterBloc extends Bloc<CounterEvent, int> {
+    ...
+
+    @override
+    Stream<int> mapEventToState(CounterEvent event) async* {
+        switch (event) {
+
+        }
+    }
+}
+```
+
+---
+
+# Bloc Anatomy
+
+[.code-highlight: 9-11]
+
+```dart
+...
+
+class CounterBloc extends Bloc<CounterEvent, int> {
+    ...
+
+    @override
+    Stream<int> mapEventToState(CounterEvent event) async* {
+        switch (event) {
+            case CounterEvent.increment:
+                yield state + 1;
+                break;
+        }
+    }
+}
+```
+
+---
+
+# Bloc Anatomy
 
 [.code-highlight: 12-14]
 
 ```dart
-import 'dart:async';
-import 'package:bloc/bloc.dart';
-
-enum CounterEvent { increment, decrement }
+...
 
 class CounterBloc extends Bloc<CounterEvent, int> {
-    @override
-    int get initialState => 0;
-
-    @override
-    Stream<int> mapEventToState(CounterEvent event) async* {
-        switch (event) {
-
-        }
-    }
-}
-```
-
----
-
-# bloc anatomy
-
-[.code-highlight: 13-15]
-
-```dart
-import 'dart:async';
-import 'package:bloc/bloc.dart';
-
-enum CounterEvent { increment, decrement }
-
-class CounterBloc extends Bloc<CounterEvent, int> {
-    @override
-    int get initialState => 0;
+    ...
 
     @override
     Stream<int> mapEventToState(CounterEvent event) async* {
         switch (event) {
             case CounterEvent.increment:
                 yield state + 1;
+                break;
+            case CounterEvent.decrement:
+                yield state - 1;
                 break;
         }
     }
@@ -283,9 +323,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# bloc anatomy
-
-[.code-highlight: 16-18]
+# Bloc Anatomy
 
 ```dart
 import 'dart:async';
@@ -313,35 +351,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# bloc anatomy
-
-```dart
-import 'dart:async';
-import 'package:bloc/bloc.dart';
-
-enum CounterEvent { increment, decrement }
-
-class CounterBloc extends Bloc<CounterEvent, int> {
-    @override
-    int get initialState => 0;
-
-    @override
-    Stream<int> mapEventToState(CounterEvent event) async* {
-        switch (event) {
-            case CounterEvent.increment:
-                yield state + 1;
-                break;
-            case CounterEvent.decrement:
-                yield state - 1;
-                break;
-        }
-    }
-}
-```
-
----
-
-# bloc in action
+# Bloc in Action
 
 ```dart
 import 'counter_bloc.dart';
@@ -358,7 +368,7 @@ void main() {
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 1]
 
@@ -377,7 +387,7 @@ void main() {
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 4]
 
@@ -396,7 +406,7 @@ void main() {
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 6]
 
@@ -415,7 +425,7 @@ void main() {
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 8]
 
@@ -434,7 +444,7 @@ void main() {
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 9]
 
@@ -453,7 +463,7 @@ void main() {
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 ```sh
 $ dart example/main.dart
@@ -464,7 +474,7 @@ $ dart example/main.dart
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 1]
 
@@ -477,7 +487,7 @@ $ dart example/main.dart
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 2]
 
@@ -490,7 +500,7 @@ $ dart example/main.dart
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 3]
 
@@ -503,7 +513,7 @@ $ dart example/main.dart
 
 ---
 
-# bloc in action
+# Bloc in Action
 
 [.code-highlight: 4]
 
@@ -516,27 +526,2239 @@ $ dart example/main.dart
 
 ---
 
-# goals
+# Separation of Concerns
 
-**☑️ separate presentation from logic**
-☐ logging/analytics
-☐ test with ease
-☐ develop efficiently (with many devs)
-☐ maintainable/scalable
+![inline](./assets/bloc-separation-of-concerns.pdf)
 
 ---
 
-# goals
-
-☑️ separate presentation from logic
-**☐ logging/analytics**
-☐ test with ease
-☐ develop efficiently (with many devs)
-☐ maintainable/scalable
+![left fit](./assets/angular-counter.gif)
+![right fit](./assets/flutter-counter.gif)
 
 ---
 
-# bloc hooks: onEvent
+# Goals
+
+**☑️ decouple UI & business logic**
+
+☐ easy to test
+
+☐ predictable/consistent
+
+---
+
+# Goals
+
+☑️ decouple UI & business logic
+
+**☐ easy to test**
+
+☐ predictable/consistent
+
+---
+
+# Packages
+
+- package:bloc - Core (Dart)
+
+- **package:bloc_test - Testing Helpers (Dart)**
+
+- package:flutter_bloc - Flutter Widgets
+
+- ~~package:angular_bloc - AngularDart Components~~
+
+---
+
+# package:bloc_test
+
+```yaml
+name: counter_bloc
+description: A counter bloc example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  bloc: ^3.0.0
+
+dev_dependencies:
+  test: ^1.11.1
+  bloc_test: ^3.0.0
+```
+
+---
+
+[.code-highlight: 11-13]
+
+# package:bloc_test
+
+```yaml
+name: counter_bloc
+description: A counter bloc example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  bloc: ^3.0.0
+
+dev_dependencies:
+  test: ^1.11.1
+  bloc_test: ^3.0.0
+```
+
+---
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 6,14]
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 1, 7, 13]
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 2, 4, 8-12]
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 9]
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 10]
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 11]
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+# bloc_test Anatomy
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    blocTest(
+      'emits [0] when no events are added',
+      build: () => CounterBloc(),
+      expect: [0],
+    );
+  });
+}
+```
+
+---
+
+# bloc_test in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+00:01 +1: All tests passed!
+```
+
+---
+
+[.code-highlight: 1]
+
+# bloc_test in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+00:01 +1: All tests passed!
+```
+
+---
+
+[.code-highlight: 2]
+
+# bloc_test in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+00:01 +1: All tests passed!
+```
+
+---
+
+[.code-highlight: 3]
+
+# bloc_test in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+00:01 +1: All tests passed!
+```
+
+---
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, 1] when CounterEvent.increment is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+      expect: [0, 1],
+    );
+  });
+}
+
+```
+
+---
+
+[.code-highlight: 10-15]
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, 1] when CounterEvent.increment is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+      expect: [0, 1],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 11]
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, 1] when CounterEvent.increment is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+      expect: [0, 1],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 12]
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, 1] when CounterEvent.increment is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+      expect: [0, 1],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 13]
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, 1] when CounterEvent.increment is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+      expect: [0, 1],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 14]
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, 1] when CounterEvent.increment is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+      expect: [0, 1],
+    );
+  });
+}
+```
+
+---
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, 1] when CounterEvent.increment is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+      expect: [0, 1],
+    );
+  });
+}
+```
+
+---
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, -1] when CounterEvent.decrement is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.decrement),
+      expect: [0, -1],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 10-15]
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, -1] when CounterEvent.decrement is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.decrement),
+      expect: [0, -1],
+    );
+  });
+}
+```
+
+---
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, -1] when CounterEvent.decrement is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.decrement),
+      expect: [0, -1],
+    );
+  });
+}
+```
+
+---
+
+# All Tests in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+✓ CounterBloc emits [0, 1] when CounterEvent.increment is added
+✓ CounterBloc emits [0, -1] when CounterEvent.decrement is added
+00:01 +3: All tests passed!
+```
+
+---
+
+[.code-highlight: 1]
+
+# All Tests in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+✓ CounterBloc emits [0, 1] when CounterEvent.increment is added
+✓ CounterBloc emits [0, -1] when CounterEvent.decrement is added
+00:01 +3: All tests passed!
+```
+
+---
+
+[.code-highlight: 2-4]
+
+# All Tests in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+✓ CounterBloc emits [0, 1] when CounterEvent.increment is added
+✓ CounterBloc emits [0, -1] when CounterEvent.decrement is added
+00:01 +3: All tests passed!
+```
+
+---
+
+[.code-highlight: 5]
+
+# All Tests in Action
+
+```sh
+$ pub run test
+✓ CounterBloc emits [0] when no events are added
+✓ CounterBloc emits [0, 1] when CounterEvent.increment is added
+✓ CounterBloc emits [0, -1] when CounterEvent.decrement is added
+00:01 +3: All tests passed!
+```
+
+---
+
+# Goals
+
+☑️ decouple UI & business logic
+
+**☑️ easy to test**
+
+☐ predictable/consistent
+
+---
+
+# Goals
+
+☑️ decouple **UI** & business logic
+
+☑️ easy to test
+
+☐ predictable/consistent
+
+---
+
+# Packages
+
+- package:bloc - Core (Dart)
+
+- package:bloc_test - Testing Helpers (Dart)
+
+- **package:flutter_bloc - Flutter Widgets**
+
+- ~~package:angular_bloc - AngularDart Components~~
+
+---
+
+# package:flutter_bloc
+
+```yaml
+name: counter_app
+description: A counter app example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^3.0.0
+  counter_bloc:
+    path: ../counter_bloc
+
+flutter:
+  uses-material-design: true
+```
+
+---
+
+[.code-highlight: 9-10]
+
+# package:flutter_bloc
+
+```yaml
+name: counter_app
+description: A counter app example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^3.0.0
+  counter_bloc:
+    path: ../counter_bloc
+
+flutter:
+  uses-material-design: true
+```
+
+---
+
+[.code-highlight: 11]
+
+# package:flutter_bloc
+
+```yaml
+name: counter_app
+description: A counter app example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^3.0.0
+  counter_bloc:
+    path: ../counter_bloc
+
+flutter:
+  uses-material-design: true
+```
+
+---
+
+[.code-highlight: 12-13]
+
+# package:flutter_bloc
+
+```yaml
+name: counter_app
+description: A counter app example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^3.0.0
+  counter_bloc:
+    path: ../counter_bloc
+
+flutter:
+  uses-material-design: true
+```
+
+---
+
+# flutter_bloc in Action
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:counter_bloc/counter_bloc.dart';
+
+void main() => runApp(CounterApp());
+```
+
+---
+
+[.code-highlight: 1-3]
+
+# flutter_bloc in Action
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:counter_bloc/counter_bloc.dart';
+
+void main() => runApp(CounterApp());
+```
+
+---
+
+[.code-highlight: 5]
+
+# flutter_bloc in Action
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:counter_bloc/counter_bloc.dart';
+
+void main() => runApp(CounterApp());
+```
+
+---
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocProvider(
+        create: (_) => CounterBloc(),
+        child: CounterPage(),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 3, 13]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocProvider(
+        create: (_) => CounterBloc(),
+        child: CounterPage(),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 4-5, 12]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocProvider(
+        create: (_) => CounterBloc(),
+        child: CounterPage(),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 6, 11]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocProvider(
+        create: (_) => CounterBloc(),
+        child: CounterPage(),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 7-10]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocProvider(
+        create: (_) => CounterBloc(),
+        child: CounterPage(),
+      ),
+    );
+  }
+}
+```
+
+---
+
+# Bloc**Provider** 🤔
+
+---
+
+# Bloc**Provider** 🧐
+
+![inline](./assets/flutter-bloc-dependencies.png)
+
+---
+
+# Bloc**Provider** 😲
+
+![inline](./assets/flutter-bloc-dependencies-zoom.png)
+
+---
+
+# Bloc**Provider** 😊
+
+![inline](./assets/together-meme.jpeg)
+
+---
+
+# BlocProvider Anatomy
+
+> _makes a bloc available to a sub-tree_
+
+```dart
+BlocProvider(
+  create: (BuildContext context) {
+    return MyBloc();
+  },
+  child: MyChild(),
+)
+```
+
+---
+
+[.code-highlight: 2-4]
+
+# BlocProvider Anatomy
+
+> _makes a bloc available to a sub-tree_
+
+```dart
+BlocProvider(
+  create: (BuildContext context) {
+    return MyBloc();
+  },
+  child: MyChild(),
+)
+```
+
+---
+
+[.code-highlight: 5]
+
+# BlocProvider Anatomy
+
+> _makes a bloc available to a sub-tree_
+
+```dart
+BlocProvider(
+  create: (BuildContext context) {
+    return MyBloc();
+  },
+  child: MyChild(),
+)
+```
+
+---
+
+# BlocProvider Anatomy
+
+```dart
+class MyChild extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final myBloc = BlocProvider.of<MyBloc>(context);
+
+    ...
+  }
+}
+```
+
+---
+
+[.code-highlight: 4]
+
+# BlocProvider Anatomy
+
+```dart
+class MyChild extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final myBloc = BlocProvider.of<MyBloc>(context);
+
+    ...
+  }
+}
+```
+
+---
+
+# dispose?
+
+```dart
+...
+
+class _CounterAppState extends State<CounterApp> {
+  CounterBloc _counterBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterBloc = CounterBloc();
+  }
+
+  @override
+  Widget build(BuildContext context) {...}
+
+  @override
+  void dispose() {
+    _counterBloc.close();
+    super.dispose();
+  }
+}
+```
+
+---
+
+[.code-highlight: 3, 20]
+
+# dispose?
+
+```dart
+...
+
+class _CounterAppState extends State<CounterApp> {
+  CounterBloc _counterBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterBloc = CounterBloc();
+  }
+
+  @override
+  Widget build(BuildContext context) {...}
+
+  @override
+  void dispose() {
+    _counterBloc.close();
+    super.dispose();
+  }
+}
+```
+
+---
+
+[.code-highlight: 4, 6-10, 15-19]
+
+# dispose?
+
+```dart
+...
+
+class _CounterAppState extends State<CounterApp> {
+  CounterBloc _counterBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterBloc = CounterBloc();
+  }
+
+  @override
+  Widget build(BuildContext context) {...}
+
+  @override
+  void dispose() {
+    _counterBloc.close();
+    super.dispose();
+  }
+}
+```
+
+---
+
+[.code-highlight: 9]
+
+# BlocProvider Anatomy
+
+> _by default BlocProvider automatically closes the provided bloc_
+
+```dart
+BlocProvider({
+    Key key,
+    @required Create<T> create,
+    Widget child,
+    bool lazy,
+  }) : this._(
+          key: key,
+          create: create,
+          dispose: (_, bloc) => bloc?.close(),
+          child: child,
+          lazy: lazy,
+        );
+```
+
+---
+
+# Multiple Blocs?
+
+```dart
+MultiBlocProvider(
+  providers: [
+    BlocProvider<BlocA>(
+      create: (_) => BlocA(),
+    ),
+    BlocProvider<BlocB>(
+      create: (_) => BlocB(),
+    ),
+  ],
+  child: MyChild(),
+)
+```
+
+---
+
+[.code-highlight: 9]
+
+# Back to flutter_bloc in Action
+
+```dart
+...
+
+class CounterApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocProvider(
+        create: (_) => CounterBloc(),
+        child: CounterPage(),
+      ),
+    );
+  }
+}
+```
+
+---
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 3, 17]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 4-5, 16]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 6-8, 15]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 9-13]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+# BlocBuilder Anatomy
+
+> _handles building a widget in response to bloc states_
+
+```dart
+BlocBuilder<MyBloc, MyState>(
+  builder: (BuildContext context, MyState state) {
+    // return widget based on MyState
+  }
+)
+```
+
+---
+
+[.code-highlight: 1, 5]
+
+# BlocBuilder Anatomy
+
+> _handles building a widget in response to bloc states_
+
+```dart
+BlocBuilder<MyBloc, MyState>(
+  builder: (BuildContext context, MyState state) {
+    // return widget based on MyState
+  }
+)
+```
+
+---
+
+[.code-highlight: 2-4]
+
+# BlocBuilder Anatomy
+
+> _handles building a widget in response to bloc states_
+
+```dart
+BlocBuilder<MyBloc, MyState>(
+  builder: (BuildContext context, MyState state) {
+    // return widget based on MyState
+  }
+)
+```
+
+---
+
+[.code-highlight: 2]
+
+# Where is the Bloc?
+
+```dart
+BlocBuilder<MyBloc, MyState>(
+  bloc: BlocProvider.of<MyBloc>(context),
+  builder: (BuildContext context, MyState state) {
+    // return widget based on MyState
+  }
+)
+```
+
+---
+
+# Where is the Bloc?
+
+[.code-highlight: 8]
+
+```dart
+class _BlocBuilderBaseState<B extends Bloc<dynamic, S>, S>
+    extends State<BlocBuilderBase<B, S>> {
+  ...
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = widget.bloc ?? BlocProvider.of<B>(context);
+
+    ...
+  }
+```
+
+---
+
+# Back to flutter_bloc in Action
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 11]
+
+# flutter_bloc in Action
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+# flutter_bloc in Action
+
+```dart
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      ...
+      floatingActionButton: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => counterBloc.add(CounterEvent.increment),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 4]
+
+# flutter_bloc in Action
+
+```dart
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      ...
+      floatingActionButton: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => counterBloc.add(CounterEvent.increment),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 7-8, 17-18]
+
+# flutter_bloc in Action
+
+```dart
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      ...
+      floatingActionButton: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => counterBloc.add(CounterEvent.increment),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 9-12]
+
+# flutter_bloc in Action
+
+```dart
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      ...
+      floatingActionButton: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => counterBloc.add(CounterEvent.increment),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 11]
+
+# flutter_bloc in Action
+
+```dart
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      ...
+      floatingActionButton: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => counterBloc.add(CounterEvent.increment),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 13-16]
+
+# flutter_bloc in Action
+
+```dart
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      ...
+      floatingActionButton: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => counterBloc.add(CounterEvent.increment),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 15]
+
+# flutter_bloc in Action
+
+```dart
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      ...
+      floatingActionButton: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => counterBloc.add(CounterEvent.increment),
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+![inline](./assets/counter-app-tree.pdf)
+
+---
+
+# Challenge: only evens?
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          condition: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 9-14]
+
+# Challenge: only evens?
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          condition: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+    );
+  }
+}
+```
+
+---
+
+[.code-highlight: 10]
+
+# Challenge: only evens?
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocBuilder<CounterBloc, int>(
+          condition: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+    );
+  }
+}
+```
+
+---
+
+![fit](./assets/even-counter.gif)
+
+---
+
+[.code-highlight: 9-21]
+
+# Side Effects: Snack Bars
+
+```dart
+...
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocListener<CounterBloc, int>(
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          child: BlocBuilder<CounterBloc, int>(
+            condition: (previous, current) => (current % 2) == 0,
+            builder: (context, state) {
+              return Text('You have pushed the button $state times.');
+            },
+          ),
+        ),
+      ),
+      ...
+```
+
+---
+
+# BlocListener Anatomy
+
+> _handles doing "stuff" in response to state changes_
+
+```dart
+BlocListener<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to state changes
+  },
+  child: MyChild(),
+)
+```
+
+---
+
+[.code-highlight: 1, 6]
+
+# BlocListener Anatomy
+
+> _handles doing "stuff" in response to state changes_
+
+```dart
+BlocListener<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to state changes
+  },
+  child: MyChild(),
+)
+```
+
+---
+
+[.code-highlight: 2-4]
+
+# BlocListener Anatomy
+
+> _handles doing "stuff" in response to state changes_
+
+```dart
+BlocListener<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to state changes
+  },
+  child: MyChild(),
+)
+```
+
+---
+
+[.code-highlight: 5]
+
+# BlocListener Anatomy
+
+> _handles doing "stuff" in response to state changes_
+
+```dart
+BlocListener<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to state changes
+  },
+  child: MyChild(),
+)
+```
+
+---
+
+[.code-highlight: 10-14]
+
+# Back to Side Effects: Snack Bars
+
+```dart
+...
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocListener<CounterBloc, int>(
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          child: BlocBuilder<CounterBloc, int>(
+            condition: (previous, current) => (current % 2) == 0,
+            builder: (context, state) {
+              return Text('You have pushed the button $state times.');
+            },
+          ),
+        ),
+      ),
+      ...
+```
+
+---
+
+![fit](./assets/counter-snack-bar.gif)
+
+---
+
+# Challenge: Snack Bar + only odds?
+
+```dart
+...
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocListener<CounterBloc, int>(
+          condition: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          child: BlocBuilder<CounterBloc, int>(
+            condition: (previous, current) => (current % 2) == 0,
+            builder: (context, state) {
+              return Text('You have pushed the button $state times.');
+            },
+          ),
+        ),
+      ),
+      ...
+```
+
+---
+
+[.code-highlight: 10]
+
+# Challenge: Snack Bar + only odds?
+
+```dart
+...
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocListener<CounterBloc, int>(
+          condition: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          child: BlocBuilder<CounterBloc, int>(
+            condition: (previous, current) => (current % 2) == 0,
+            builder: (context, state) {
+              return Text('You have pushed the button $state times.');
+            },
+          ),
+        ),
+      ),
+      ...
+```
+
+---
+
+![fit](./assets/counter-snack-bar-odd.gif)
+
+---
+
+[.code-highlight: 10-21]
+
+# Let's Refactor
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocConsumer<CounterBloc, int>(
+          listenWhen: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          buildWhen: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+```
+
+---
+
+# BlocConsumer Anatomy
+
+> _combined BlocBuilder and BlocListener_
+
+```dart
+BlocConsumer<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to new states
+  },
+  builder: (BuildContext context, MyState state) {
+    // return widgets in response to new states
+  },
+)
+```
+
+---
+
+[.code-highlight: 1,8]
+
+# BlocConsumer Anatomy
+
+> _combined BlocBuilder and BlocListener_
+
+```dart
+BlocConsumer<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to new states
+  },
+  builder: (BuildContext context, MyState state) {
+    // return widgets in response to new states
+  },
+)
+```
+
+---
+
+[.code-highlight: 2-4]
+
+# BlocConsumer Anatomy
+
+> _combined BlocBuilder and BlocListener_
+
+```dart
+BlocConsumer<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to new states
+  },
+  builder: (BuildContext context, MyState state) {
+    // return widgets in response to new states
+  },
+)
+```
+
+---
+
+[.code-highlight: 5-7]
+
+# BlocConsumer Anatomy
+
+> _combined BlocBuilder and BlocListener_
+
+```dart
+BlocConsumer<MyBloc, MyState>(
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to new states
+  },
+  builder: (BuildContext context, MyState state) {
+    // return widgets in response to new states
+  },
+)
+```
+
+---
+
+[.code-highlight: 2-5]
+
+# BlocConsumer Anatomy
+
+> _combined BlocBuilder and BlocListener_
+
+```dart
+BlocConsumer<MyBloc, MyState>(
+  listenWhen: (MyState previous, MyState current) {
+    // return whether or not listener should be invoked
+    // based on previous/current states.
+  },
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to new states
+  },
+  builder: (BuildContext context, MyState state) {
+    // return widgets in response to new states
+  },
+)
+```
+
+---
+
+[.code-highlight: 9-12]
+
+# BlocConsumer Anatomy
+
+> _combined BlocBuilder and BlocListener_
+
+```dart
+BlocConsumer<MyBloc, MyState>(
+  listenWhen: (MyState previous, MyState current) {
+    // return whether or not listener should be invoked
+    // based on previous/current states.
+  },
+  listener: (BuildContext context, MyState state) {
+    // do stuff in response to new states
+  },
+  buildWhen: (MyState previous, MyState current) {
+    // return whether or not builder should be invoked
+    // based on previous/current states.
+  },
+  builder: (BuildContext context, MyState state) {
+    // return widgets in response to new states
+  },
+)
+```
+
+---
+
+[.code-highlight: 10-21]
+
+# Back to the Refactor
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocConsumer<CounterBloc, int>(
+          listenWhen: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          buildWhen: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+```
+
+---
+
+[.code-highlight: 11]
+
+# Back to the Refactor
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocConsumer<CounterBloc, int>(
+          listenWhen: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          buildWhen: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+```
+
+---
+
+[.code-highlight: 12-16]
+
+# Back to the Refactor
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocConsumer<CounterBloc, int>(
+          listenWhen: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          buildWhen: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+```
+
+---
+
+[.code-highlight: 17]
+
+# Back to the Refactor
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocConsumer<CounterBloc, int>(
+          listenWhen: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          buildWhen: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+```
+
+---
+
+[.code-highlight: 18-20]
+
+# Back to the Refactor
+
+```dart
+...
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: Center(
+        child: BlocConsumer<CounterBloc, int>(
+          listenWhen: (previous, current) => (current % 2) == 1,
+          listener: (context, state) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text('counter: $state')));
+          },
+          buildWhen: (previous, current) => (current % 2) == 0,
+          builder: (context, state) {
+            return Text('You have pushed the button $state times.');
+          },
+        ),
+      ),
+      ...
+```
+
+---
+
+# Goals
+
+☑️ decouple UI & business logic
+
+☑️ easy to test
+
+**☐ predictable/consistent**
+
+---
+
+# bloc: onEvent
 
 > _invoked when an event is added to the bloc_
 
@@ -559,7 +2781,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 [.code-highlight: 5-9]
 
-# bloc hooks: onEvent
+# bloc: onEvent
 
 > _invoked when an event is added to the bloc_
 
@@ -582,7 +2804,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 [.code-highlight: 8]
 
-# bloc hooks: onEvent
+# bloc: onEvent
 
 > _invoked when an event is added to the bloc_
 
@@ -676,7 +2898,7 @@ onEvent CounterEvent.decrement
 
 ---
 
-# bloc hooks: onTransition
+# bloc: onTransition
 
 > _invoked when a new state is emitted_
 
@@ -699,7 +2921,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 [.code-highlight: 5-9]
 
-# bloc hooks: onTransition
+# bloc: onTransition
 
 > _invoked when a new state is emitted_
 
@@ -722,7 +2944,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 [.code-highlight: 8]
 
-# bloc hooks: onTransition
+# bloc: onTransition
 
 > _invoked when a new state is emitted_
 
@@ -846,7 +3068,7 @@ onTransition Transition { currentState: 1, event: CounterEvent.decrement, nextSt
 
 ---
 
-# bloc hooks: onError
+# bloc: onError
 
 > _invoked when an uncaught error is thrown within a bloc_
 
@@ -869,7 +3091,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 [.code-highlight: 5-9]
 
-# bloc hooks: onError
+# bloc: onError
 
 > _invoked when an uncaught error is thrown within a bloc_
 
@@ -892,7 +3114,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 [.code-highlight: 8]
 
-# bloc hooks: onError
+# bloc: onError
 
 > _invoked when an uncaught error is thrown within a bloc_
 
@@ -913,7 +3135,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# bloc hooks: onError
+# bloc: onError
 
 ```dart
 class CounterBloc extends Bloc<CounterEvent, int> {
@@ -938,7 +3160,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# bloc hooks: onError
+# bloc: onError
 
 [.code-highlight: 14-15]
 
@@ -965,7 +3187,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 ---
 
-# bloc hooks: onError
+# bloc: onError
 
 ```dart
 void main() {
@@ -983,7 +3205,7 @@ void main() {
 
 [.code-highlight: 8]
 
-# bloc hooks: onError
+# bloc: onError
 
 ```dart
 void main() {
@@ -1390,40 +3612,32 @@ onError CounterBloc, Exception: unhandled event!,
 
 ---
 
-# goals
+# tooling
 
-☑️ separate presentation from logic
-**☑️ logging/analytics**
-☐ test with ease
-☐ develop efficiently (with many devs)
-☐ maintainable/scalable
+- VSCode & IntelliJ
+
+![inline left](./assets/new-bloc.gif) ![inline right 100%](./assets/new-bloc-intellij.png)
 
 ---
 
-# goals
+# documentation
 
-☑️ separate presentation from logic
-☑️ logging/analytics
-**☐ test with ease**
-☐ develop efficiently (with many devs)
-☐ maintainable/scalable
+![inline](./assets/bloc-library-site.png)
 
 ---
 
-# package:bloc_test
+# examples apps & tutorials
+
+![inline](./assets/flutter-firebase-login.gif)![inline](./assets/flutter-github-search.gif)![inline](./assets/flutter-infinite-list.gif)![inline](./assets/flutter-timer.gif)![inline](./assets/flutter-todos.gif)![inline](./assets/flutter-weather.gif)
 
 ---
 
-# package:flutter_bloc
+# get in touch
 
----
+-> https://twitter.com/felangelov
 
-# package:hydrated_bloc
+-> https://github.com/felangel
 
----
+-> felangelov@gmail.com
 
-# package:sealed_flutter_bloc
-
----
-
-# Tooling
+-> https://discord.gg/Hc5KD3g
