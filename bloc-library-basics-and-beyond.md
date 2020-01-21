@@ -7,6 +7,14 @@ slidenumbers: true
 
 ---
 
+# Very Good Ventures, Chicago 🕶️🦄
+
+![inline](./assets/vgv-chicago.jpg)
+
+^ opened an office with my friend/teammate, Jorge. if interested in learning more about VGV reach out.
+
+---
+
 # about me
 
 ![inline left](./assets/bmw-logo.png) ![inline right](./assets/vgv-logo.png)
@@ -15,17 +23,9 @@ slidenumbers: true
 
 ---
 
-# VGV Chicago 🕶️🦄
+![inline](./assets/baby-yoda-struggle.jpg)
 
-![inline](./assets/vgv-chicago.jpg)
-
-^ opened an office with my friend/teammate, Jorge. if interested in learning more about VGV reach out.
-
----
-
-![inline](./assets/create-app-meme.jpeg)
-
-[.footer: https://memeshappen.com/meme/one-does-not-simply-a/one-does-not-simply-create-a-successful-app-29206/9]
+[.footer: https://www.looper.com/175737/the-best-reactions-to-the-mandalorians-baby-yoda/]
 
 ^ so rewind 2 years, we were asked to rewrite the BMW app in Flutter. we had to get it right
 
@@ -37,91 +37,35 @@ slidenumbers: true
 
 ☐ easy to test
 
-☐ predictable/consistent
+☐ predictable/maintainable
 
 ---
 
-![inline](./assets/choose-state-management.png)
+# In the beginning...
 
-[.footer: https://medium.com/flutter-community/let-me-help-you-to-understand-and-choose-a-state-management-solution-for-your-app-9ffeac834ee3]
-
-^ so we did tons of research and specifically with regard to state management we decided on an approach. Teammate, Jorge wrote an article about our strategy. It's not surprise that we ended up pivoting many times since then.
+![inline](./assets/bloc-pattern.png)
 
 ---
 
-# Evolution is Key
+# When you use Rx for the first time
+
+![inline](./assets/tesla-window-break.gif)
+
+[.footer: https://techcrunch.com/2019/11/21/tesla-accidentally-busted-two-windows-on-the-cybertruck-while-demonstrating-how-tough-they-are/]
 
 ---
 
-# Packages
-
-- package:bloc - Core (Dart)
-
-- package:bloc_test - Testing Helpers (Dart)
-
-- package:flutter_bloc - Flutter Widgets
-
-- ~~package:angular_bloc - AngularDart Components~~
+![inline 70%](./assets/bloc-logo.png)
 
 ---
 
-# Packages
+# Goals
 
-- **package:bloc - Core (Dart)**
+**☐ decouple UI & business logic**
 
-- package:bloc_test - Testing Helpers (Dart)
+☐ easy to test
 
-- package:flutter_bloc - Flutter Widgets
-
-- ~~package:angular_bloc - AngularDart Components~~
-
----
-
-# Packages
-
-- package:bloc - Core (Dart)
-
-- **package:bloc_test - Testing Helpers (Dart)**
-
-- package:flutter_bloc - Flutter Widgets
-
-- ~~package:angular_bloc - AngularDart Components~~
-
----
-
-# Packages
-
-- package:bloc - Core (Dart)
-
-- package:bloc_test - Testing Helpers (Dart)
-
-- **package:flutter_bloc - Flutter Widgets**
-
-- ~~package:angular_bloc - AngularDart Components~~
-
----
-
-# Packages
-
-- package:bloc - Core (Dart)
-
-- package:bloc_test - Testing Helpers (Dart)
-
-- package:flutter_bloc - Flutter Widgets
-
-- **~~package:angular_bloc - AngularDart Components~~**
-
----
-
-# Packages
-
-- **package:bloc - Core (Dart)**
-
-- package:bloc_test - Testing Helpers (Dart)
-
-- package:flutter_bloc - Flutter Widgets
-
-- ~~package:angular_bloc - AngularDart Components~~
+☐ predictable/maintainable
 
 ---
 
@@ -543,7 +487,7 @@ $ dart example/main.dart
 
 ☐ easy to test
 
-☐ predictable/consistent
+☐ predictable/maintainable
 
 ---
 
@@ -553,19 +497,7 @@ $ dart example/main.dart
 
 **☐ easy to test**
 
-☐ predictable/consistent
-
----
-
-# Packages
-
-- package:bloc - Core (Dart)
-
-- **package:bloc_test - Testing Helpers (Dart)**
-
-- package:flutter_bloc - Flutter Widgets
-
-- ~~package:angular_bloc - AngularDart Components~~
+☐ predictable/maintainable
 
 ---
 
@@ -1066,6 +998,34 @@ void main() {
 
 ---
 
+[.code-highlight: 13]
+
+# One More Time
+
+```dart
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+
+import '../counter_bloc.dart';
+
+void main() {
+  group('CounterBloc', () {
+    ...
+
+    blocTest(
+      'emits [0, -1] when CounterEvent.decrement is added',
+      build: () => CounterBloc(),
+      act: (counterBloc) => counterBloc.add(CounterEvent.decrement),
+      expect: [0, -1],
+    );
+  });
+}
+```
+
+---
+
+[.code-highlight: 14]
+
 # One More Time
 
 ```dart
@@ -1150,7 +1110,7 @@ $ pub run test
 
 **☑️ easy to test**
 
-☐ predictable/consistent
+☐ predictable/maintainable
 
 ---
 
@@ -1160,19 +1120,7 @@ $ pub run test
 
 ☑️ easy to test
 
-☐ predictable/consistent
-
----
-
-# Packages
-
-- package:bloc - Core (Dart)
-
-- package:bloc_test - Testing Helpers (Dart)
-
-- **package:flutter_bloc - Flutter Widgets**
-
-- ~~package:angular_bloc - AngularDart Components~~
+☐ predictable/maintainable
 
 ---
 
@@ -1440,7 +1388,9 @@ class CounterApp extends StatelessWidget {
 
 # Bloc**Provider** 😊
 
-![inline](./assets/together-meme.jpeg)
+![inline](./assets/surprised-yoda.jpg)
+
+[.footer: https://imgflip.com/memetemplate/213059118/Surprised-Baby-Yoda]
 
 ---
 
@@ -1490,6 +1440,12 @@ BlocProvider(
   child: MyChild(),
 )
 ```
+
+---
+
+![inline](./assets/baby-yoda-crib.jpg)
+
+[.footer: https://www.indiewire.com/2019/12/the-mandalorian-merchandise-questions-1202195206/]
 
 ---
 
@@ -2754,7 +2710,7 @@ class CounterPage extends StatelessWidget {
 
 ☑️ easy to test
 
-**☐ predictable/consistent**
+**☐ predictable/maintainable**
 
 ---
 
@@ -2820,6 +2776,23 @@ class CounterBloc extends Bloc<CounterEvent, int> {
   }
 
   ...
+}
+```
+
+---
+
+# the good old days
+
+```dart
+import 'counter_bloc.dart';
+
+void main() {
+    final counterBloc = CounterBloc();
+
+    counterBloc.listen(print);
+
+    counterBloc.add(CounterEvent.increment);
+    counterBloc.add(CounterEvent.decrement);
 }
 ```
 
@@ -3612,6 +3585,26 @@ onError CounterBloc, Exception: unhandled event!,
 
 ---
 
+# Goals
+
+☑️ decouple UI & business logic
+
+☑️ easy to test
+
+☐ **predictable**/maintainable
+
+---
+
+# Goals
+
+☑️ decouple UI & business logic
+
+☑️ easy to test
+
+☐ predictable/**maintainable**
+
+---
+
 # tooling
 
 - VSCode & IntelliJ
@@ -3632,12 +3625,20 @@ onError CounterBloc, Exception: unhandled event!,
 
 ---
 
-# get in touch
+# Goals
 
--> https://twitter.com/felangelov
+☑️ decouple UI & business logic
 
--> https://github.com/felangel
+☑️ easy to test
 
--> felangelov@gmail.com
+☑️ **predictable/maintainable**
 
--> https://discord.gg/Hc5KD3g
+---
+
+# see ya later 👋
+
+![inline](./assets/baby-yoda-drinking.jpg)
+
+> https://bloclibrary.dev | https://discord.gg/Hc5KD3g
+
+[.footer: https://www.unilad.co.uk/film-and-tv/people-are-loving-the-toss-a-coin-to-your-witcher-song/]
