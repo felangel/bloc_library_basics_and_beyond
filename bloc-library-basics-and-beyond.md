@@ -1905,7 +1905,7 @@ class CounterPage extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(Icons.remove),
-            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
           ),
         ],
       ),
@@ -1935,7 +1935,7 @@ class CounterPage extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(Icons.remove),
-            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
           ),
         ],
       ),
@@ -1965,7 +1965,7 @@ class CounterPage extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(Icons.remove),
-            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
           ),
         ],
       ),
@@ -1995,7 +1995,7 @@ class CounterPage extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(Icons.remove),
-            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
           ),
         ],
       ),
@@ -2025,7 +2025,7 @@ class CounterPage extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(Icons.remove),
-            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
           ),
         ],
       ),
@@ -2055,7 +2055,7 @@ class CounterPage extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(Icons.remove),
-            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
           ),
         ],
       ),
@@ -2085,7 +2085,7 @@ class CounterPage extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(Icons.remove),
-            onPressed: () =>counterBloc.add(CounterEvent.decrement),
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
           ),
         ],
       ),
@@ -2093,6 +2093,10 @@ class CounterPage extends StatelessWidget {
   }
 }
 ```
+
+---
+
+![inline](./assets/flutter-counter.gif)
 
 ---
 
@@ -3641,4 +3645,4 @@ onError CounterBloc, Exception: unhandled event!,
 
 > https://bloclibrary.dev | https://discord.gg/Hc5KD3g
 
-[.footer: https://www.unilad.co.uk/film-and-tv/people-are-loving-the-toss-a-coin-to-your-witcher-song/]
+[.footer: https://www.syfy.com/syfywire/baby-yoda-soup]
