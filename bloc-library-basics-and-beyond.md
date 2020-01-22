@@ -23,14 +23,6 @@ slidenumbers: true
 
 ---
 
-![inline](./assets/baby-yoda-struggle.jpg)
-
-[.footer: https://www.looper.com/175737/the-best-reactions-to-the-mandalorians-baby-yoda/]
-
-^ so rewind 2 years, we were asked to rewrite the BMW app in Flutter. we had to get it right
-
----
-
 # Goals
 
 ☐ decouple UI & business logic
@@ -45,13 +37,47 @@ slidenumbers: true
 
 ![inline](./assets/bloc-pattern.png)
 
+[.footer: https://www.didierboelens.com/2018/08/reactive-programming---streams---bloc/]
+
 ---
 
-# When you use Rx for the first time
+```dart
+class CounterBloc {
+  int _counter = 0;
 
-![inline](./assets/tesla-window-break.gif)
+  BehaviorSubject<int> _counterStateSubject;
+  PublishSubject<void> _incrementEventSubject;
 
-[.footer: https://techcrunch.com/2019/11/21/tesla-accidentally-busted-two-windows-on-the-cybertruck-while-demonstrating-how-tough-they-are/]
+  Stream<int> get counter => _counterStateSubject.stream;
+  Sink<void> get increment => _incrementEventSubject.sink;
+
+  StreamSubscription<void> _incrementEventSubscription;
+
+  CounterBloc() {
+    _counterStateSubject = BehaviorSubject<int>.seeded(_counter);
+    _incrementEventSubject = PublishSubject<void>();
+    _incrementEventSubscription = _incrementEventSubject.listen(_handleIncrement);
+  }
+
+  void dispose() {
+    _incrementEventSubscription.cancel();
+    _incrementEventSubject.close();
+    _counterStateSubject.close();
+  }
+
+  void _handleIncrement(_) {
+    _counterStateSubject.add(++_counter);
+  }
+}
+```
+
+---
+
+# Learning from our past
+
+![inline](./assets/rx-meme.jpeg)
+
+[.footer: https://medium.com/@drm/unsubscribe-from-angular-observables-2102dad5b732]
 
 ---
 
@@ -478,6 +504,369 @@ $ dart example/main.dart
 
 ![left fit](./assets/angular-counter.gif)
 ![right fit](./assets/flutter-counter.gif)
+
+---
+
+# Async?
+
+---
+
+[.code-highlight: 10]
+
+# Async Bloc
+
+```yaml
+name: counter_bloc
+description: A counter bloc example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  bloc: ^3.0.0
+  equatable: ^1.0.0
+```
+
+---
+
+# Async Bloc
+
+```dart
+import 'package:equatable/equatable.dart';
+
+abstract class CounterState extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class CounterLoadInProgress extends CounterState {}
+
+class CounterLoadSuccess extends CounterState {
+  CounterLoadSuccess(this.count);
+
+  final int count;
+
+  @override
+  List<Object> get props => [count];
+}
+
+class CounterLoadFailure extends CounterState {}
+```
+
+---
+
+[.code-highlight: 3-6]
+
+# Async Bloc
+
+```dart
+import 'package:equatable/equatable.dart';
+
+abstract class CounterState extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class CounterLoadInProgress extends CounterState {}
+
+class CounterLoadSuccess extends CounterState {
+  CounterLoadSuccess(this.count);
+
+  final int count;
+
+  @override
+  List<Object> get props => [count];
+}
+
+class CounterLoadFailure extends CounterState {}
+```
+
+---
+
+[.code-highlight: 8]
+
+# Async Bloc
+
+```dart
+import 'package:equatable/equatable.dart';
+
+abstract class CounterState extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class CounterLoadInProgress extends CounterState {}
+
+class CounterLoadSuccess extends CounterState {
+  CounterLoadSuccess(this.count);
+
+  final int count;
+
+  @override
+  List<Object> get props => [count];
+}
+
+class CounterLoadFailure extends CounterState {}
+```
+
+---
+
+[.code-highlight: 9-17]
+
+# Async Bloc
+
+```dart
+import 'package:equatable/equatable.dart';
+
+abstract class CounterState extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class CounterLoadInProgress extends CounterState {}
+
+class CounterLoadSuccess extends CounterState {
+  CounterLoadSuccess(this.count);
+
+  final int count;
+
+  @override
+  List<Object> get props => [count];
+}
+
+class CounterLoadFailure extends CounterState {}
+```
+
+---
+
+[.code-highlight: 19]
+
+# Async Bloc
+
+```dart
+import 'package:equatable/equatable.dart';
+
+abstract class CounterState extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class CounterLoadInProgress extends CounterState {}
+
+class CounterLoadSuccess extends CounterState {
+  CounterLoadSuccess(this.count);
+
+  final int count;
+
+  @override
+  List<Object> get props => [count];
+}
+
+class CounterLoadFailure extends CounterState {}
+```
+
+---
+
+# Async Bloc
+
+[.code-highlight: 3]
+
+```dart
+...
+
+class CounterBloc extends Bloc<CounterEvent, CounterState> {...}
+```
+
+---
+
+# Async Bloc
+
+[.code-highlight: 4-6]
+
+```dart
+...
+
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
+    CounterBloc(this._counterService);
+
+    final CounterService _counterService;
+
+    ...
+}
+```
+
+---
+
+# Async Bloc
+
+[.code-highlight: 3,4]
+
+```dart
+...
+
+@override
+int get initialState => CounterLoadInProgress();
+
+@override
+Stream<int> mapEventToState(CounterEvent event) async* {
+    switch (event) {
+        case CounterEvent.increment:
+            yield* _mapIncrementToState();
+            break;
+        case CounterEvent.decrement:
+            yield* _mapDecrementToState();
+            break;
+    }
+}
+```
+
+---
+
+# Async Bloc
+
+[.code-highlight: 10,13]
+
+```dart
+...
+
+@override
+int get initialState => CounterLoadInProgress();
+
+@override
+Stream<int> mapEventToState(CounterEvent event) async* {
+    switch (event) {
+        case CounterEvent.increment:
+            yield* _mapIncrementToState();
+            break;
+        case CounterEvent.decrement:
+            yield* _mapDecrementToState();
+            break;
+    }
+}
+```
+
+---
+
+# Async Bloc
+
+```dart
+...
+
+Stream<CounterState> _mapIncrementToState() async* {
+  yield CounterLoadInProgress();
+  try {
+    final asyncCount = await _counterService.increment();
+    yield CounterLoadSuccess(asyncCount);
+  } catch (_) {
+    yield CounterLoadFailure();
+  }
+}
+
+```
+
+---
+
+[.code-highlight: 4,11]
+
+# Async Bloc
+
+```dart
+...
+
+Stream<CounterState> _mapIncrementToState() async* {
+  yield CounterLoadInProgress();
+  try {
+    final asyncCount = await _counterService.increment();
+    yield CounterLoadSuccess(asyncCount);
+  } catch (_) {
+    yield CounterLoadFailure();
+  }
+}
+
+```
+
+---
+
+[.code-highlight: 6-7]
+
+# Async Bloc
+
+```dart
+...
+
+Stream<CounterState> _mapIncrementToState() async* {
+  yield CounterLoadInProgress();
+  try {
+    final asyncCount = await _counterService.increment();
+    yield CounterLoadSuccess(asyncCount);
+  } catch (_) {
+    yield CounterLoadFailure();
+  }
+}
+
+```
+
+---
+
+[.code-highlight: 8-10]
+
+# Async Bloc
+
+```dart
+...
+
+Stream<CounterState> _mapIncrementToState() async* {
+  yield CounterLoadInProgress();
+  try {
+    final asyncCount = await _counterService.increment();
+    yield CounterLoadSuccess(asyncCount);
+  } catch (_) {
+    yield CounterLoadFailure();
+  }
+}
+
+```
+
+---
+
+# Async Bloc
+
+```dart
+...
+
+Stream<CounterState> _mapDecrementToState() async* {
+  yield CounterLoadInProgress();
+  try {
+    final asyncCount = await _counterService.decrement();
+    yield CounterLoadSuccess(asyncCount);
+  } catch (_) {
+    yield CounterLoadFailure();
+  }
+}
+
+```
+
+---
+
+[.code-highlight: 6]
+
+# Async Bloc
+
+```dart
+...
+
+Stream<CounterState> _mapDecrementToState() async* {
+  yield CounterLoadInProgress();
+  try {
+    final asyncCount = await _counterService.decrement();
+    yield CounterLoadSuccess(asyncCount);
+  } catch (_) {
+    yield CounterLoadFailure();
+  }
+}
+
+```
 
 ---
 
@@ -948,30 +1337,6 @@ void main() {
 
 ---
 
-# One More Time
-
-```dart
-import 'package:test/test.dart';
-import 'package:bloc_test/bloc_test.dart';
-
-import '../counter_bloc.dart';
-
-void main() {
-  group('CounterBloc', () {
-    ...
-
-    blocTest(
-      'emits [0, -1] when CounterEvent.decrement is added',
-      build: () => CounterBloc(),
-      act: (counterBloc) => counterBloc.add(CounterEvent.decrement),
-      expect: [0, -1],
-    );
-  });
-}
-```
-
----
-
 [.code-highlight: 10-15]
 
 # One More Time
@@ -1101,6 +1466,113 @@ $ pub run test
 ✓ CounterBloc emits [0, -1] when CounterEvent.decrement is added
 00:01 +3: All tests passed!
 ```
+
+---
+
+# Async Tests?
+
+---
+
+[.code-highlight: 14]
+
+# package:bloc_test
+
+```yaml
+name: counter_bloc
+description: A counter bloc example
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  bloc: ^3.0.0
+
+dev_dependencies:
+  test: ^1.11.1
+  bloc_test: ^3.0.0
+  mockito: ^4.0.0
+```
+
+---
+
+# Async Bloc Tests
+
+```dart
+import 'package:mockito/mockito.dart';
+
+class MockCounterService extends Mock implements CounterService {}
+
+...
+
+```
+
+---
+
+[.code-highlight: 5-9]
+
+# Async Bloc Tests
+
+```dart
+...
+
+blocTest(
+  'emits [CounterLoadInProgress(), CounterLoadSuccess(1)] when CounterEvent.increment is added',
+  build: () {
+    final counterService = MockCounterService();
+    when(counterService.increment).thenAnswer((_) => Future.value(1));
+    return CounterBloc(counterService);
+  },
+  act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+  expect: [CounterLoadInProgress(), CounterLoadSuccess(1)],
+);
+```
+
+---
+
+[.code-highlight: 10]
+
+# Async Bloc Tests
+
+```dart
+...
+
+blocTest(
+  'emits [CounterLoadInProgress(), CounterLoadSuccess(1)] when CounterEvent.increment is added',
+  build: () {
+    final counterService = MockCounterService();
+    when(counterService.increment).thenAnswer((_) => Future.value(1));
+    return CounterBloc(counterService);
+  },
+  act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+  expect: [CounterLoadInProgress(), CounterLoadSuccess(1)],
+);
+```
+
+---
+
+[.code-highlight: 11]
+
+# Async Bloc Tests
+
+```dart
+...
+
+blocTest(
+  'emits [CounterLoadInProgress(), CounterLoadSuccess(1)] when CounterEvent.increment is added',
+  build: () {
+    final counterService = MockCounterService();
+    when(counterService.increment).thenAnswer((_) => Future.value(1));
+    return CounterBloc(counterService);
+  },
+  act: (counterBloc) => counterBloc.add(CounterEvent.increment),
+  expect: [CounterLoadInProgress(), CounterLoadSuccess(1)],
+);
+```
+
+---
+
+![inline](./assets/tests-meme.png)
 
 ---
 
@@ -1403,7 +1875,7 @@ BlocProvider(
   create: (BuildContext context) {
     return MyBloc();
   },
-  child: MyChild(),
+  child: TheChild(),
 )
 ```
 
@@ -1420,7 +1892,7 @@ BlocProvider(
   create: (BuildContext context) {
     return MyBloc();
   },
-  child: MyChild(),
+  child: TheChild(),
 )
 ```
 
@@ -1437,7 +1909,7 @@ BlocProvider(
   create: (BuildContext context) {
     return MyBloc();
   },
-  child: MyChild(),
+  child: TheChild(),
 )
 ```
 
@@ -1452,7 +1924,7 @@ BlocProvider(
 # BlocProvider Anatomy
 
 ```dart
-class MyChild extends StatelessWidget {
+class TheChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final myBloc = BlocProvider.of<MyBloc>(context);
@@ -1469,7 +1941,7 @@ class MyChild extends StatelessWidget {
 # BlocProvider Anatomy
 
 ```dart
-class MyChild extends StatelessWidget {
+class TheChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final myBloc = BlocProvider.of<MyBloc>(context);
@@ -1888,6 +2360,92 @@ class CounterPage extends StatelessWidget {
 
 ---
 
+# flutter_bloc in Action (Async)
+
+```dart
+...
+
+BlocBuilder<CounterBloc, int>(
+  builder: (context, state) {
+    if (state is CounterLoadInProgress) {
+      return MyLoadingIndicator();
+    }
+    if (state is CounterLoadSuccess) {
+      return Text('You have pushed the button ${state.count} times.');
+    }
+    return MyError();
+  },
+),
+```
+
+---
+
+[.code-highlight: 5-7]
+
+# flutter_bloc in Action (Async)
+
+```dart
+...
+
+BlocBuilder<CounterBloc, int>(
+  builder: (context, state) {
+    if (state is CounterLoadInProgress) {
+      return MyLoadingIndicator();
+    }
+    if (state is CounterLoadSuccess) {
+      return Text('You have pushed the button ${state.count} times.');
+    }
+    return MyError();
+  },
+),
+```
+
+---
+
+[.code-highlight: 8-10]
+
+# flutter_bloc in Action (Async)
+
+```dart
+...
+
+BlocBuilder<CounterBloc, int>(
+  builder: (context, state) {
+    if (state is CounterLoadInProgress) {
+      return MyLoadingIndicator();
+    }
+    if (state is CounterLoadSuccess) {
+      return Text('You have pushed the button ${state.count} times.');
+    }
+    return MyError();
+  },
+),
+```
+
+---
+
+[.code-highlight: 11]
+
+# flutter_bloc in Action (Async)
+
+```dart
+...
+
+BlocBuilder<CounterBloc, int>(
+  builder: (context, state) {
+    if (state is CounterLoadInProgress) {
+      return MyLoadingIndicator();
+    }
+    if (state is CounterLoadSuccess) {
+      return Text('You have pushed the button ${state.count} times.');
+    }
+    return MyError();
+  },
+),
+```
+
+---
+
 # flutter_bloc in Action
 
 ```dart
@@ -2096,11 +2654,7 @@ class CounterPage extends StatelessWidget {
 
 ---
 
-![inline](./assets/flutter-counter.gif)
-
----
-
-![inline](./assets/counter-app-tree.pdf)
+![inline left](./assets/flutter-counter.gif)![inline right](./assets/counter-app-tree.pdf)
 
 ---
 
@@ -3621,6 +4175,8 @@ onError CounterBloc, Exception: unhandled event!,
 
 ![inline](./assets/bloc-library-site.png)
 
+> https://bloclibrary.dev
+
 ---
 
 # examples apps & tutorials
@@ -3639,10 +4195,16 @@ onError CounterBloc, Exception: unhandled event!,
 
 ---
 
-# see ya later 👋
+# 220 slides later...we did it 🎉
+
+---
+
+# Thanks for coming 👋
 
 ![inline](./assets/baby-yoda-drinking.jpg)
 
-> https://bloclibrary.dev | https://discord.gg/Hc5KD3g
+> Twitter - @felangelov
+> Bloc Library Docs - https://bloclibrary.dev
+> Bloc Library Discord - https://discord.gg/Hc5KD3g
 
 [.footer: https://www.syfy.com/syfywire/baby-yoda-soup]
