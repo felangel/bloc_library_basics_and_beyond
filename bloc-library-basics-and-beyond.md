@@ -1685,7 +1685,7 @@ onError CounterBloc, Exception: unhandled event!,
 
 # Bonus: package:hydrated_bloc
 
-![inline 70%](./assets/hydrated-bloc-logo.png)
+![inline](./assets/hydrated-bloc-logo.png)
 ![inline](./assets/hydrated-bloc-package.png)
 
 ---
