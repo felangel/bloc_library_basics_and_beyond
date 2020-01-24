@@ -51,6 +51,8 @@ slidenumbers: true
 
 ![inline 70%](./assets/bloc-logo.png)
 
+![inline](./assets/bloc-package.png)
+
 ---
 
 # Overview
@@ -511,6 +513,11 @@ Stream<CounterState> _mapDecrementToState() async* {
 
 ---
 
+![inline 70%](./assets/bloc-test-logo.png)
+![inline](./assets/bloc-test-package.png)
+
+---
+
 [.code-highlight: all]
 [.code-highlight: 11-13]
 
@@ -735,6 +742,11 @@ blocTest(
 ☑️ easy to test
 
 ☐ predictable/maintainable
+
+---
+
+![inline 70%](./assets/flutter-bloc-logo.png)
+![inline](./assets/flutter-bloc-package.png)
 
 ---
 
@@ -1671,9 +1683,10 @@ onError CounterBloc, Exception: unhandled event!,
 
 ---
 
-# Bonus: Caching State with Hydrated Bloc
+# Bonus: package:hydrated_bloc
 
-![inline](./assets/hydrated_bloc.png)
+![inline 70%](./assets/hydrated-bloc-logo.png)
+![inline](./assets/hydrated-bloc-package.png)
 
 ---
 
